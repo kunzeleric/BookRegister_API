@@ -44,6 +44,16 @@ class LivroController {
             res.status(500).send({message: error.message});
         }
     }
+
+    static deletarLivro = async (req, res) => {
+        const id = req.params.id;
+        try {
+            await livros.findByIdAndDelete(id);
+            res.status(200).send({message: 'Livro removido com sucesso.'});
+        } catch (error) {
+            res.status(500).send({message: error.message});
+        }
+    }
 }
 
 export default LivroController;
