@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const AutorSchema = new mongoose.Schema(
+const autorSchema = new mongoose.Schema(
     {
         id: { type: String},
         nome: { type: String, required: true },
@@ -11,6 +11,6 @@ const AutorSchema = new mongoose.Schema(
     }
 )
 
-const autores = mongoose.model("autores", AutorSchema);
+const autores = mongoose.model("autores", autorSchema);
 
 export default autores;

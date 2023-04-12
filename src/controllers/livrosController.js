@@ -5,8 +5,9 @@ class LivroController {
 
     static listarLivros = async (req, res) => {
         try {
-            const livrosResultado = await livros.find();
-            res.status(200).json(livrosResultado);
+            let resultadoLivros = await livros.find().populate('autor').exec();
+            res.status(200).json(resultadoLivros);
+            
         } catch (error) {
             res.status(500).json(error);
         }
@@ -15,8 +16,8 @@ class LivroController {
     static listarLivroPorId = async (req, res) => {
         const id = req.params.id;
         try {
-            let livro = await livros.findById(id);
-            res.status(200).send(livro.toJSON);
+            let livro = await livros.findById(id).populate('autor', 'nome').exec();
+            res.status(200).send(livro);
         } catch (error) {
             res.status(400).send({message: `${error.message} - ID do livro não foi encontrado.`});
         }
@@ -24,9 +25,9 @@ class LivroController {
 
     static cadastrarLivro = async (req, res) => {
         try{
-            let livro = new livros(req.body);
+            let livro =  new livros(req.body);
             await livro.save();
-            res.status(201).send(livro.toJSON());
+            res.status(201).send(livro);
         }
         catch (error){
             res.status(500).send({
